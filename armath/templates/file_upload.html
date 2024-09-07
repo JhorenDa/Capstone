@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Multiple Files</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .upload-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .logout-button {
+            background-color: #e74c3c;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+
+        a {
+            text-decoration: none;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .logout {
+            text-align: center;
+            
+        }
+
+        .logout button {
+            width: auto;
+        }
+
+        .file-upload-label {
+            margin-top: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .modal-content{
+            width: 100%;
+        }
+    </style>
+    <script>
+        // Function to show the modal if there is a success message
+        function showModal(message) {
+            if (message) {
+                const modal = document.getElementById('successModal');
+                document.getElementById('modalMessage').innerText = message;
+                modal.style.display = 'flex';
+            }
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+    </script>
+</head>
+<body onload="showModal('{{ success_message }}')">
+    
+
+    <div class="upload-container">
+        
+        
+        <h1>Upload Multiple Files</h1>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <label for="folder_name">Enter Folder Name:</label>
+                <input type="text" name="folder_name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="files" class="file-upload-label">Select Files:</label>
+                <input type="file" name="files" multiple required>
+            </div>
+
+            <button type="submit">Upload Files</button>
+        </form>
+        <div class="logout">
+            <a href="{{url_for('logout')}}">
+                <button class="logout-button">Logout</button>
+            </a>
+        </div>
+        <div id="successModal" class="modal">
+            <div class="modal-content">
+                <h2>Success!</h2>
+                <p id="modalMessage"></p>
+                <button class="close-button" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+        
+    </div>
+    
+
+</body>
+</html>
